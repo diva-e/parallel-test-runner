@@ -8,9 +8,21 @@
 	<version>1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>Parallel Test Runner projects' parent</name>
+	<name>Parallel Test Runner Parent</name>
 
 	<url>https://github.com/diva-e/parallel-test-runner</url>
+
+	<inceptionYear>2016</inceptionYear>
+
+	<developers>
+		<developer>
+			<name>Christian Kumpe</name>
+			<id>ckumpe</id>
+			<email>christian.kumpe@diva-e.com</email>
+			<organization>diva-e</organization>
+			<organizationUrl>https://www.diva-e.com</organizationUrl>
+		</developer>
+	</developers>
 
 	<licenses>
 		<license>
@@ -20,11 +32,10 @@
 		</license>
 	</licenses>
 
-	<scm>
-		<url>https://github.com/diva-e/parallel-test-runner</url>
-		<connection>scm:git:https://github.com/diva-e/parallel-test-runner.git</connection>
-		<developerConnection>scm:git:git@github.com:diva-e/parallel-test-runner.git</developerConnection>
-	</scm>
+	<issueManagement>
+		<system>github</system>
+		<url>https://github.com/diva-e/parallel-test-runner/issues</url>
+	</issueManagement>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -43,6 +54,13 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+				<groupId>com.divae.parallel-test-runner</groupId>
+				<artifactId>parallel-test-runner</artifactId>
+				<version>1.0-SNAPSHOT</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
 				<groupId>org.hamcrest</groupId>
 				<artifactId>hamcrest-all</artifactId>
 				<version>${hamcrest.version}</version>
@@ -60,6 +78,7 @@
 				<version>${junit.version}</version>
 				<scope>test</scope>
 			</dependency>
+
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-beans</artifactId>
@@ -105,5 +124,11 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<scm>
+		<url>https://github.com/diva-e/parallel-test-runner</url>
+		<connection>scm:git:https://github.com/diva-e/parallel-test-runner.git</connection>
+		<developerConnection>scm:git:git@github.com:diva-e/parallel-test-runner.git</developerConnection>
+	</scm>
 
 </project>

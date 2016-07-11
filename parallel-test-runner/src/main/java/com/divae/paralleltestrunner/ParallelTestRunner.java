@@ -21,16 +21,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
 /**
- * Can execute spring based tests multiple times (repetitions) and in parallel (threads).
+ * Can execute spring based tests multiple times ({@link #numberOfRepetitions}) and in parallel ({@link #numberOfThreads}).
  */
 public class ParallelTestRunner extends SpringJUnit4ClassRunner {
 
 	private static final String TEXT_CONTEXT_FIELD_IN_SPRING_JUNIT4_CLASSRUMMER = "testContext";
 
-	@Value("${loadtest.parallel.threads}")
+	@Value("${test.threads}")
 	private int numberOfThreads = 1;
 
-	@Value("${loadtest.parallel.repetitions}")
+	@Value("${test.repetitions}")
 	private int numberOfRepetitions = 1;
 
 	public ParallelTestRunner(Class<?> testClass, RunnerBuilder runnerBuilder) throws InitializationError {
