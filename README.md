@@ -11,7 +11,7 @@ You can download the project and compile with Maven:
 You can include the Parallel Test Runner into your pom.xml:
 
 	<dependency>
-		<groupId>com.divae.parallel-test-runner</groupId>
+		<groupId>com.diva-e.parallel-test-runner</groupId>
 		<artifactId>parallel-test-runner</artifactId>
 		<version>1.0-SNAPSHOT</version>
 		<scope>test</scope>
