@@ -2,6 +2,10 @@ package com.divae.paralleltestrunner;
 
 import com.divae.paralleltestrunner.ParallelTestRunner.ParallelTestThread;
 
+/**
+ * The standard {@link ParallelTestInfo} implementation retrieving the required
+ * information from the current {@link ParallelTestRunner.ParallelTestThread}.
+ */
 public class ParallelTestInfoImpl implements ParallelTestInfo {
 
 	private static final int FIRST_REPETITION = 0;

@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.junit.internal.runners.statements.Fail;
 import org.junit.runner.Description;
+import org.junit.runner.Runner;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
@@ -14,6 +15,7 @@ import org.junit.runners.model.RunnerBuilder;
 import org.junit.runners.model.Statement;
 import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.TestContext;
 import org.springframework.test.context.TestContextManager;
@@ -21,7 +23,49 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
 /**
- * Can execute spring based tests multiple times ({@link #numberOfRepetitions}) and in parallel ({@link #numberOfThreads}).
+ * This {@link Runner} implementation is based on Spring's
+ * {@link SpringJUnit4ClassRunner}. It can execute tests multiple times
+ * ({@link #numberOfRepetitions}) and in parallel ({@link #numberOfThreads}). A
+ * configured Spring setup is required. E.g.:
+ * 
+ * <pre>
+ * <i>ExampleTest.java:</i>
+ * <code class="java">
+ * <b>&#064;RunWith(ParallelTestRunner.class)</b>
+ * <b>@ContextConfiguration("spring-context.xml")</b>
+ * public class ExampleTest {
+ *     ... 
+ * }
+ * </code>
+ * <i>spring-context.xml:</i>
+ * <code class="xml">
+ * &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+ * &lt;beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ *     xmlns="http://www.springframework.org/schema/beans"
+ *     xmlns:context="http://www.springframework.org/schema/context"
+ *     xsi:schemaLocation="
+ *         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+ *         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+ *     "&gt;
+ *
+ *    &lt;context:property-placeholder location="test.properties" /&gt;
+ *    
+ * &lt;/beans&gt;
+ * </code>
+ * <i>test.properties:</i>
+ * <code class="properties">
+ * test.threads = 2
+ * test.repetitions = 3 
+ * </code>
+ * </pre>
+ * 
+ * And the Spring context needs a configured
+ * {@link PropertyPlaceholderConfigurer} with at least to properties being
+ * replaced:
+ * <ul>
+ * <li>{@code test.threads}: the number of parallel executions
+ * <li>{@code test.repetitions}: the number of repeated executions
+ * </ul>
  */
 public class ParallelTestRunner extends SpringJUnit4ClassRunner {
 
@@ -72,13 +116,13 @@ public class ParallelTestRunner extends SpringJUnit4ClassRunner {
 	}
 
 	private Description createThreadDescription(FrameworkMethod method, int thread) {
-		return Description.createTestDescription(createPseudoClassName(method) + ", thread=" + thread,
-				testName(method), method.getAnnotations());
+		return Description.createTestDescription(createPseudoClassName(method) + ", thread=" + thread, testName(method),
+				method.getAnnotations());
 	}
 
 	private Description createRepetitionDescription(FrameworkMethod method, int thread, int repetition) {
-		return Description.createTestDescription(createPseudoClassName(method), testName(method) + ", thread=" + thread
-				+ ", repetition=" + repetition, method.getAnnotations());
+		return Description.createTestDescription(createPseudoClassName(method),
+				testName(method) + ", thread=" + thread + ", repetition=" + repetition, method.getAnnotations());
 	}
 
 	@Override

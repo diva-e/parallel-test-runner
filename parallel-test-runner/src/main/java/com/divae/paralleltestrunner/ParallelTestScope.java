@@ -5,7 +5,11 @@ import org.springframework.beans.factory.config.Scope;
 
 import com.divae.paralleltestrunner.ParallelTestRunner.ParallelTestThread;
 
-class ParallelTestScope implements Scope {
+/**
+ * {@link Scope} implementation to allow bean instantiation by thread.
+ *
+ */
+public class ParallelTestScope implements Scope {
 
 	@Override
 	public Object get(String name, ObjectFactory<?> objectFactory) {
