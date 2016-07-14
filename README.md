@@ -13,7 +13,7 @@ You can include the Parallel Test Runner into your pom.xml:
 	<dependency>
 		<groupId>com.diva-e.parallel-test-runner</groupId>
 		<artifactId>parallel-test-runner</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 		<scope>test</scope>
 	</dependency>
 
