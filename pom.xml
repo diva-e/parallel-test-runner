@@ -8,6 +8,7 @@
 	<packaging>pom</packaging>
 
 	<name>Parallel Test Runner Parent</name>
+	<description>Parent Project of Parallel Test Runner and its Demos</description>
 
 	<url>https://github.com/diva-e/parallel-test-runner</url>
 
