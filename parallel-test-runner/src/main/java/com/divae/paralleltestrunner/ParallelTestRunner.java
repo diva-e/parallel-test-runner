@@ -69,7 +69,7 @@ import org.springframework.test.util.ReflectionTestUtils;
  */
 public class ParallelTestRunner extends SpringJUnit4ClassRunner {
 
-	private static final String TEXT_CONTEXT_FIELD_IN_SPRING_JUNIT4_CLASSRUMMER = "testContext";
+	private static final String TEXT_CONTEXT_FIELD_IN_SPRING_JUNIT4_CLASS_RUNNER = "testContext";
 
 	@Value("${test.threads}")
 	private int numberOfThreads = 1;
@@ -85,7 +85,7 @@ public class ParallelTestRunner extends SpringJUnit4ClassRunner {
 
 	private void injectOwnDependencies() {
 		TestContext testContext = (TestContext) ReflectionTestUtils.getField(getTestContextManager(),
-				TEXT_CONTEXT_FIELD_IN_SPRING_JUNIT4_CLASSRUMMER);
+				TEXT_CONTEXT_FIELD_IN_SPRING_JUNIT4_CLASS_RUNNER);
 		ApplicationContext context = testContext.getApplicationContext();
 		context.getBean(AutowiredAnnotationBeanPostProcessor.class).processInjection(this);
 	}
@@ -173,29 +173,39 @@ public class ParallelTestRunner extends SpringJUnit4ClassRunner {
 				currentRepetition = repetition;
 				try {
 
-					Description description = createRepetitionDescription(method, currentThread, repetition);
-					if (isTestMethodIgnored(method)) {
-						notifier.fireTestIgnored(description);
-					} else {
-						Statement statement;
-						try {
-							statement = methodBlock(method);
-						} catch (Throwable ex) {
-							statement = new Fail(ex);
-						}
-						runLeaf(statement, description, notifier);
-					}
+					executeRepetition(repetition);
 
 				} finally {
-					synchronized (destructionCallbacks) {
-						for (Entry<String, Runnable> callback : destructionCallbacks.entrySet()) {
-							callback.getValue().run();
-						}
-						destructionCallbacks.clear();
-					}
-					beans.clear();
+					
+					cleanUpBeans();
+					
 				}
 			}
+		}
+
+		private void executeRepetition(int repetition) {
+			Description description = createRepetitionDescription(method, currentThread, repetition);
+			if (isTestMethodIgnored(method)) {
+				notifier.fireTestIgnored(description);
+			} else {
+				Statement statement;
+				try {
+					statement = methodBlock(method);
+				} catch (Throwable ex) {
+					statement = new Fail(ex);
+				}
+				runLeaf(statement, description, notifier);
+			}
+		}
+		
+		private void cleanUpBeans() {
+			synchronized (destructionCallbacks) {
+				for (Entry<String, Runnable> callback : destructionCallbacks.entrySet()) {
+					callback.getValue().run();
+				}
+				destructionCallbacks.clear();
+			}
+			beans.clear();
 		}
 
 		public int getCurrentThread() {
