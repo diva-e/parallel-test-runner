@@ -18,8 +18,6 @@ You can include the Parallel Test Runner into your pom.xml:
 	</dependency>
 
 
-Currently you have to download the code and install the Parallel Test Runner into your local repository. We are trying to push the artifact into Maven Central soon.
-
 ## Use in your Test
 
 Add the Parallel Test Runner to your JUnit Test:
