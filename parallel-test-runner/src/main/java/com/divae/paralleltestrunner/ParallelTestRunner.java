@@ -69,7 +69,7 @@ import org.springframework.test.util.ReflectionTestUtils;
  */
 public class ParallelTestRunner extends SpringJUnit4ClassRunner {
 
-	private static final String TEXT_CONTEXT_FIELD_IN_SPRING_JUNIT4_CLASS_RUNNER = "testContext";
+	private static final String TEST_CONTEXT_FIELD_IN_SPRING_JUNIT4_CLASS_RUNNER = "testContext";
 
 	@Value("${test.threads}")
 	private int numberOfThreads = 1;
@@ -85,7 +85,7 @@ public class ParallelTestRunner extends SpringJUnit4ClassRunner {
 
 	private void injectOwnDependencies() {
 		TestContext testContext = (TestContext) ReflectionTestUtils.getField(getTestContextManager(),
-				TEXT_CONTEXT_FIELD_IN_SPRING_JUNIT4_CLASS_RUNNER);
+				TEST_CONTEXT_FIELD_IN_SPRING_JUNIT4_CLASS_RUNNER);
 		ApplicationContext context = testContext.getApplicationContext();
 		context.getBean(AutowiredAnnotationBeanPostProcessor.class).processInjection(this);
 	}
