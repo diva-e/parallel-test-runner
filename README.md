@@ -1,13 +1,14 @@
-# Introduction
+# Parallel Test Runner
+
 JUnit Runner implementation to run tests n times in parallel with m repetitions. 
 
-# Installation
+## Installation
 You can download the project and compile with Maven:
 
 	~/parallel-test-runner $ mvn install
 
-# Usage
-## Add dependency
+## Usage
+### Add dependency
 You can include the Parallel Test Runner into your pom.xml:
 
 	<dependency>
@@ -18,7 +19,7 @@ You can include the Parallel Test Runner into your pom.xml:
 	</dependency>
 
 
-## Use in your Test
+### Use in your Test
 
 Add the Parallel Test Runner to your JUnit Test:
 
@@ -52,3 +53,19 @@ Configure the threads and repetitions in the properties file e.g. `test.properti
 Run the test.
 
 See [Spring documentation](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/integration-testing.html) for more information about configuring spring and tests.
+
+## License
+
+Copyright 2016 diva-e Netpioneer GmbH
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
